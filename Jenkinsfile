@@ -3,7 +3,11 @@ pipeline {
     agent any
 
         stages {
-            stage('Build') {
+            stage('Build Feature') {
+
+                when {
+                    branch 'feature/*'
+                }
 
                 agent {
                     docker {
@@ -24,12 +28,10 @@ pipeline {
                     sh 'ls -la build/reports'
                     sh 'ls -la build/test-results'
                     junit 'build/test-results/test/*.xml'
-
-
-
+                    sh 'git --version'
                 }
             }
-            stage('Test') {
+            stage('Test Feature') {
                 steps {
                     echo 'Testing...'
                 }
