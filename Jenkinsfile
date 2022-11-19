@@ -23,6 +23,7 @@ pipeline {
                     sh 'gradle test'
                     sh 'ls -la build/reports'
                     sh 'ls -la build/test-results'
+                    junit 'build/test-results/test/*.xml'
 
 
 
