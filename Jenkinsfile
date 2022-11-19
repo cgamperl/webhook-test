@@ -20,6 +20,10 @@ pipeline {
                     sh 'ls -la build/libs'
                     // Run the gradle build
                     // Test with JUnit
+                    sh 'gradle test'
+                    sh 'ls -la build/reports'
+                    sh 'ls -la build/test-results'
+
 
 
                 }
