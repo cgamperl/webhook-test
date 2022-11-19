@@ -14,8 +14,10 @@ pipeline {
 
                 steps {
                     echo 'Building...'
+                    sh 'ls -la'
                     sh 'gradle --version'
                     sh 'gradle bootJar'
+                    sh 'ls -la build/libs'
                     // Run the gradle build
                     // Test with JUnit
 
