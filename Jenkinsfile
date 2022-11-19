@@ -29,6 +29,9 @@ pipeline {
                     sh 'ls -la build/test-results'
                     junit 'build/test-results/test/*.xml'
                     sh 'git --version'
+                    sh 'git switch -c integration'
+                    sh 'git merge --no-ff --no-edit feature/feature-1'
+                    sh 'git push origin integration'
                 }
             }
             stage('Test Feature') {
