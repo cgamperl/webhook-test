@@ -5,9 +5,11 @@ pipeline {
         stages {
             stage('Build') {
 
-                agent docker {
-                    image 'gradle:7.5-jdk17'
-//                     args '-v /root/.m2:/root/.m2'
+                agent {
+                    docker {
+                        image 'gradle:7.5-jdk17'
+    //                     args '-v /root/.m2:/root/.m2'
+                    }
                 }
 
                 steps {
