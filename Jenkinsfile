@@ -12,7 +12,8 @@ pipeline {
 
                 steps {
                     echo 'Building...'
-
+                    sh 'gradle --version'
+//                     sh 'gradle build'
                     // Run the gradle build
                     // Test with JUnit
 
