@@ -30,8 +30,8 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     sh 'git --version'
                     sh 'git branch -a'
-                    sh 'git switch -c integration'
-                    sh 'git merge --no-ff --no-edit feature/feature-1'
+                    sh 'git checkout integration'
+                    sh 'git merge --no-ff --no-edit remotes/origin/feature/feature-1'
                     sh 'git push origin integration'
                 }
             }
