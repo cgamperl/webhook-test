@@ -32,7 +32,10 @@ pipeline {
                     sh 'git branch -a'
                     sh 'git checkout integration'
                     sh 'git merge --no-ff --no-edit remotes/origin/feature/feature-1'
-                    sh 'git push origin integration'
+                    withCredentials([gitUsernamePassword(credentialsId: 'cgamperl_github_pat', gitToolName: 'Default')]) {
+                        sh 'git push origin integration'
+                    }
+
 
                 }
             }
