@@ -34,6 +34,7 @@ pipeline {
                     sh 'git merge --no-ff --no-edit remotes/origin/feature/feature-1'
                     sh 'git push origin integration'
 
+
                 }
             }
             stage('Test Feature') {
