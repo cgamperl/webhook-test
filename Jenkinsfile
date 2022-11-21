@@ -45,7 +45,23 @@ pipeline {
                 sh 'gradle test'
                 sh 'ls -la build/reports'
                 sh 'ls -la build/test-results/test'
-                junit 'build/test-results/test/*.xml'
+            }
+
+            post {
+                always {
+                    junit 'build/test-results/**/*.xml'
+                }
+
+                success {
+                    publishHTML target: [
+                            allowMissing         : true,
+                            alwaysLinkToLastBuild: false,
+                            keepAll              : true,
+                            reportDir            : 'build/reports/tests/test',
+                            reportFiles          : 'index.html',
+                            reportName           : 'Test Report'
+                    ]
+                }
             }
         }
 
@@ -120,7 +136,7 @@ pipeline {
         }
 
 
-        stage('Deploy') {
+        stage('Deploy Integration') {
             steps {
                 echo 'Deploying...'
             }
