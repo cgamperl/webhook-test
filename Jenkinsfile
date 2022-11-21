@@ -34,6 +34,21 @@ pipeline {
                     sh 'ls -la build/reports'
                     sh 'ls -la build/test-results'
                     junit 'build/test-results/**/*.xml'
+                }
+            }
+            stage('Test Feature') {
+                steps {
+                    echo 'Testing...'
+                    sh 'gradle test'
+                    sh 'ls -la build/reports'
+                    sh 'ls -la build/test-results'
+                    junit 'build/test-results/**/*.xml'
+                }
+            }
+
+            stage('Integrate Feature') {
+                steps {
+                    echo 'Integrating Feature...'
                     sh 'git --version'
                     sh 'git branch -a'
                     sh 'git checkout integration'
@@ -41,13 +56,6 @@ pipeline {
                     withCredentials([gitUsernamePassword(credentialsId: 'cgamperl_github_pat', gitToolName: 'Default')]) {
                         sh 'git push origin integration'
                     }
-
-
-                }
-            }
-            stage('Test Feature') {
-                steps {
-                    echo 'Testing...'
                 }
             }
 
