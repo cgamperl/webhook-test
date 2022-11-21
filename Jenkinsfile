@@ -160,8 +160,14 @@ pipeline {
             }
         }
 
+        stage('Build image Integration') {
 
-        stage('Deploy Integration') {
+            steps {
+                echo 'Building image...'
+            }
+        }
+
+        stage('Deploy Testing') {
             when {
                 branch 'integration'
             }
