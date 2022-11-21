@@ -164,6 +164,7 @@ pipeline {
 
             steps {
                 echo 'Building image...'
+                sh 'ls -la build/libs'
             }
         }
 
