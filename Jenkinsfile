@@ -19,13 +19,6 @@ pipeline {
                 branch 'feature/*'
             }
 
-//             agent {
-//                 docker {
-//                     image 'gradle:7.5-jdk17'
-// //                     args '-v /root/.m2:/root/.m2'
-//                 }
-//             }
-
             steps {
                 echo 'Building...'
                 sh 'ls -la'
@@ -86,6 +79,10 @@ pipeline {
 
 
         stage('Test Integration') {
+            when {
+                branch 'integration'
+            }
+
             steps {
                 echo 'Testing Integration...'
 
