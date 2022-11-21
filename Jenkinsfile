@@ -1,5 +1,11 @@
 pipeline {
 
+
+    environment {
+        ORG_GRADLE_PROJECT_snapshotRepository = 'http://nexus:8081/repository/maven-snapshots/'
+        ORG_GRADLE_PROJECT_releaseRepository = 'http://nexus:8081/repository/maven-releases/'
+    }
+
     agent any
 
         stages {
@@ -20,14 +26,14 @@ pipeline {
                     echo 'Building...'
                     sh 'ls -la'
                     sh 'gradle --version'
-                    sh 'gradle bootJar'
+                    sh 'gradle clean build -x test'
                     sh 'ls -la build/libs'
                     // Run the gradle build
                     // Test with JUnit
                     sh 'gradle test'
                     sh 'ls -la build/reports'
                     sh 'ls -la build/test-results'
-                    junit 'build/test-results/test/*.xml'
+                    junit 'build/test-results/**/*.xml'
                     sh 'git --version'
                     sh 'git branch -a'
                     sh 'git checkout integration'
@@ -44,6 +50,54 @@ pipeline {
                     echo 'Testing...'
                 }
             }
+
+            stage('Build Integration') {
+                when {
+                    branch 'integration'
+                }
+
+                steps {
+                    sh './gradlew clean build -x test'
+                }
+            }
+
+            stage('Test Integration') {
+                steps {
+                    echo 'Testing Integration...'
+
+                    sh './gradlew test'
+                }
+
+                post {
+                    always {
+                        junit 'build/test-results/**/*.xml'
+                    }
+
+                    success {
+                        publishHTML target: [
+                                allowMissing         : true,
+                                alwaysLinkToLastBuild: false,
+                                keepAll              : true,
+                                reportDir            : 'build/reports/tests/test',
+                                reportFiles          : 'index.html',
+                                reportName           : 'Test Report'
+                        ]
+                    }
+                }
+
+            }
+
+            stage('Publish Integration') {
+                when {
+                    branch 'integration'
+                }
+
+                steps {
+                    sh './gradlew uploadArchives'
+                }
+            }
+
+
             stage('Deploy') {
                 steps {
                     echo 'Deploying...'
