@@ -140,18 +140,18 @@ pipeline {
             }
 
             steps {
-                   sh 'set'
-                   sh 'printenv'
+                sh 'set'
+                sh 'printenv'
 //                 sh 'gradle uploadArchives'
                 nexusArtifactUploader artifacts: [
                     [
                     artifactId: 'at.tectrain.cicd',
                     classifier: '',
-                    file: 'app-0.0.1-SNAPSHOT.jar',
+                    file: 'build/libs/app-0.0.1-SNAPSHOT.jar',
                     type: 'jar']
                 ],
-                credentialsId: '',
-                groupId: 'at.tectrain.cicd',
+                credentialsId: 'nexus_credentials',
+                groupId: '',
                 nexusUrl: 'nexus:8081/repository/maven-snapshots/',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
