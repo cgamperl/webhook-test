@@ -140,7 +140,7 @@ pipeline {
             }
 
             steps {
-                sh './gradlew uploadArchives'
+                sh 'gradle uploadArchives'
             }
         }
 
