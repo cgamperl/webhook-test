@@ -1,16 +1,15 @@
 pipeline {
 
-
-    environment {
-        ORG_GRADLE_PROJECT_snapshotRepository = 'http://nexus:8081/repository/maven-snapshots/'
-        ORG_GRADLE_PROJECT_releaseRepository = 'http://nexus:8081/repository/maven-releases/'
-    }
-
     agent {
         docker {
             image 'gradle:7.5-jdk17'
             // args '-v /root/.m2:/root/.m2'
         }
+    }
+
+    environment {
+        ORG_GRADLE_PROJECT_snapshotRepository = 'http://nexus:8081/repository/maven-snapshots/'
+        ORG_GRADLE_PROJECT_releaseRepository = 'http://nexus:8081/repository/maven-releases/'
     }
 
     stages {
@@ -20,12 +19,12 @@ pipeline {
                 branch 'feature/*'
             }
 
-            agent {
-                docker {
-                    image 'gradle:7.5-jdk17'
-//                     args '-v /root/.m2:/root/.m2'
-                }
-            }
+//             agent {
+//                 docker {
+//                     image 'gradle:7.5-jdk17'
+// //                     args '-v /root/.m2:/root/.m2'
+//                 }
+//             }
 
             steps {
                 echo 'Building...'
@@ -41,6 +40,8 @@ pipeline {
                 junit 'build/test-results/**/*.xml'
             }
         }
+
+
         stage('Test Feature') {
             when {
                 branch 'feature/*'
@@ -54,6 +55,7 @@ pipeline {
                 junit 'build/test-results/test/*.xml'
             }
         }
+
 
         stage('Integrate Feature') {
             when {
