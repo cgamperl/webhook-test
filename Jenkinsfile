@@ -111,7 +111,7 @@ pipeline {
             steps {
                 echo 'Testing Integration...'
 
-                sh './gradlew test'
+                sh 'gradle test'
             }
 
             post {
