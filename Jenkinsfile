@@ -146,6 +146,10 @@ pipeline {
 
 
         stage('Deploy Integration') {
+            when {
+                branch 'integration'
+            }
+
             steps {
                 echo 'Deploying...'
             }
