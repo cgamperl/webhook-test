@@ -140,9 +140,6 @@ pipeline {
             }
 
             steps {
-                sh 'set'
-                sh 'printenv'
-//                 sh 'gradle uploadArchives'
                 nexusArtifactUploader artifacts: [
                     [
                     artifactId: 'at.tectrain.cicd',
@@ -159,6 +156,7 @@ pipeline {
                 version: '0.0.1-SNAPSHOT'
             }
         }
+
 
         stage('Build image Integration') {
 
